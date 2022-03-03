@@ -18,13 +18,76 @@ library(Biobase)
 
 # Loading the data
 
+Dataset 1:
+
 ```{r}
 file_list1 <- list.files(path="../FACS_Data/PHBV_Micha1/")
 dataset1 <- data.frame()
 for(i in 1:length(file_list1)){
-  fcs.data <- read.FCS(file_list1[i])
-  dataset1 <- rbind(dataset1, fcs.data)
+  file_string <- file_list1[i]
+  file_string <- paste("../FACS_Data/PHBV_Micha1/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data)) 
+  dataset1 <- rbind(dataset1, fcs.data.frame)
 }
-dataset1
+head(dataset1)
+summary(dataset1)
+```
+
+Dataset 2:
+
+```{r}
+file_list2 <- list.files(path="../FACS_Data/PHBV_Micha2/")
+dataset2 <- data.frame()
+for(i in 1:length(file_list2)){
+  file_string <- file_list2[i]
+  file_string <- paste("../FACS_Data/PHBV_Micha2/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data)) 
+  dataset2 <- rbind(dataset2, fcs.data.frame)
+}
+head(dataset2)
+summary(dataset2)
+```
+
+Dataset 3:
+
+```{r}
+file_list3 <- list.files(path="../FACS_Data/PHBV_Micha3/")
+dataset3 <- data.frame()
+for(i in 1:length(file_list3)){
+  file_string <- file_list3[i]
+  file_string <- paste("../FACS_Data/PHBV_Micha3/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data)) 
+  dataset3 <- rbind(dataset3, fcs.data.frame)
+}
+head(dataset3)
+summary(dataset3)
+```
+
+Dataset 4:
+
+```{r}
+file_list4 <- list.files(path="../FACS_Data/PHBV_Micha4/")
+dataset4 <- data.frame()
+for(i in 1:length(file_list4)){
+  file_string <- file_list4[i]
+  file_string <- paste("../FACS_Data/PHBV_Micha4/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data)) 
+  dataset4 <- rbind(dataset4, fcs.data.frame)
+}
+head(dataset4)
+summary(dataset4)
+```
+
+# Statistics dataset 1
+
+For the first steps of the analysis hierarchical clusters will be made to figure out how many clusters exist in the datasets, as each of these clusters could represent a plastic or a bacteria specie. 
+
+```{r}
+distmat <- dist(dataset1$`FSC-H`, method = "euclidean")
+plot(hclust(distmat))
 ```
 
