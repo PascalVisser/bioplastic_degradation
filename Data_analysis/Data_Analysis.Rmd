@@ -1,0 +1,30 @@
+---
+title: "Data_Analysis"
+author: "Rienk Heins"
+date: "3/3/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(flowCore)
+library(ggcyto)
+library(ggpubr)
+library(Biobase)
+```
+
+# Loading the data
+
+```{r}
+file_list1 <- list.files(path="../FACS_Data/PHBV_Micha1/")
+dataset1 <- data.frame()
+for(i in 1:length(file_list1)){
+  fcs.data <- read.FCS(file_list1[i])
+  dataset1 <- rbind(dataset1, fcs.data)
+}
+dataset1
+```
+
