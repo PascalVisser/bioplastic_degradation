@@ -87,7 +87,75 @@ summary(dataset4)
 For the first steps of the analysis hierarchical clusters will be made to figure out how many clusters exist in the datasets, as each of these clusters could represent a plastic or a bacteria specie. 
 
 ```{r}
-distmat <- dist(dataset1$`FSC-H`, method = "euclidean")
-plot(hclust(distmat))
+par(mfrow=c(2,2))
+plot(dataset1$`FSC-H` ~ dataset1$`SSC-H`)
+plot(dataset2$`FSC-H` ~ dataset2$`SSC-H`)
+plot(dataset3$`FSC-H` ~ dataset3$`SSC-H`)
+plot(dataset4$`FSC-H` ~ dataset4$`SSC-H`)
 ```
+
+Cluster data plotted using height scatter.
+
+```{r}
+par(mfrow=c(2,2))
+km1 <- kmeans(dataset1[,c(1:12)], 2)
+km2 <- kmeans(dataset2[,c(1:12)], 2)
+km3 <- kmeans(dataset3[,c(1:12)], 2)
+km4 <- kmeans(dataset4[,c(1:12)], 2)
+plot(dataset1$`FSC-H` ~ dataset1$`SSC-H`, col = km1$cluster,
+     main = "Clustering of dataset 1",
+     ylab = "Forward scatter H",
+     xlab = "Sideward scatter H")
+plot(dataset2$`FSC-H` ~ dataset2$`SSC-H`, col = km2$cluster,
+     main = "Clustering of dataset 2",
+     ylab = "Forward scatter H",
+     xlab = "Sideward scatter H")
+plot(dataset3$`FSC-H` ~ dataset3$`SSC-H`, col = km3$cluster,
+     main = "Clustering of dataset 3",
+     ylab = "Forward scatter H",
+     xlab = "Sideward scatter H")
+plot(dataset4$`FSC-H` ~ dataset4$`SSC-H`, col = km4$cluster,
+     main = "Clustering of dataset 4",
+     ylab = "Forward scatter H",
+     xlab = "Sideward scatter H")
+```
+
+Cluster data using area scatter.
+
+```{r}
+par(mfrow=c(2,2))
+plot(dataset1$`FSC-A` ~ dataset1$`SSC-A`, col = km1$cluster,
+     main = "Clustering of dataset 1",
+     ylab = "Forward scatter A",
+     xlab = "Sideward scatter A")
+plot(dataset2$`FSC-A` ~ dataset2$`SSC-A`, col = km2$cluster,
+     main = "Clustering of dataset 2",
+     ylab = "Forward scatter A",
+     xlab = "Sideward scatter A")
+plot(dataset3$`FSC-A` ~ dataset3$`SSC-A`, col = km3$cluster,
+     main = "Clustering of dataset 3",
+     ylab = "Forward scatter A",
+     xlab = "Sideward scatter A")
+plot(dataset4$`FSC-A` ~ dataset4$`SSC-A`, col = km4$cluster,
+     main = "Clustering of dataset 4",
+     ylab = "Forward scatter A",
+     xlab = "Sideward scatter A")
+```
+
+As seen in the figures above the clusters are mostly separated by an increase in scattering, with the first cluster sitting in the bottom left of the plot while the second cluster starts forming after a sideward scatter of just before 5.0e+06 with the exception of the second dataset. A higher forward scatter also seems to resemble the second cluster but seems to be less important than the difference in sideward scatter. 
+
+```{r}
+km1$centers[,2] - km2$centers[,2]
+```
+
+
+Creating of csv files:
+
+```{r}
+write.csv(dataset1, file = "./CSVdata/dataset1.csv", row.names = FALSE)
+write.csv(dataset2, file = "./CSVdata/dataset2.csv", row.names = FALSE)
+write.csv(dataset3, file = "./CSVdata/dataset3.csv", row.names = FALSE)
+write.csv(dataset4, file = "./CSVdata/dataset4.csv", row.names = FALSE)
+```
+
 
