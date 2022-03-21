@@ -1,0 +1,71 @@
+---
+title: "Small training set"
+author: "Rienk Heins"
+date: "3/21/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(flowCore)
+library(ggcyto)
+library(ggpubr)
+library(Biobase)
+library(ggplot2)
+```
+
+Creating the first dataset containing the fresh data at time = 0
+
+```{r}
+A1 <- read.FCS("../FACS_Data/PHBV_Micha4/A01_Uncolored_FreshPHBV_d100x_S01.fcs")
+A2 <- read.FCS("../FACS_Data/PHBV_Micha4/A02_Uncolored_FreshPHBV_d100x_S01.fcs")
+fresh_data <- as.data.frame(exprs(A1))
+fresh_data <- rbind(fresh_data, as.data.frame(exprs(A2)))
+fresh_data
+```
+
+Creating the second set at time = 2 weeks
+
+```{r}
+A1 <- read.FCS("../FACS_Data/PHBV_Micha1/A01_AfterIncubation_d1000_S1,4.fcs")
+A1 <- read.FCS("../FACS_Data/PHBV_Micha1/A02_AfterIncubation_d1000_S1,4.fcs")
+time01_data <- as.data.frame(exprs(A1))
+time01_data <- rbind(time01_data, as.data.frame(exprs(A2)))
+time01_data
+```
+
+```{r}
+A1 <- read.FCS("../FACS_Data/PHBV_Micha2/A01_Carl_d10x_S01.fcs")
+A1 <- read.FCS("../FACS_Data/PHBV_Micha2/A02_Carl_d10x_S01.fcs")
+time02_data <- as.data.frame(exprs(A1))
+time02_data <- rbind(time02_data, as.data.frame(exprs(A2)))
+time02_data
+```
+
+
+
+```{r}
+D10 <- read.FCS("../FACS_Data/PHBV_Micha1/D10_AfterIncubation_d1000_S4,4.fcs")
+E1 <- read.FCS("../FACS_Data/PHBV_Micha1/E01_AfterIncubation_d100_S1,3.fcs")
+as.data.frame(exprs(D10))
+as.data.frame(exprs(E1))
+```
+
+
+Turning data into csv format
+
+```{r}
+file_list1 <- list.files(path="../FACS_Data/PHBV_Micha1/")
+for(i in 1:length(file_list1)){
+  file_string <- file_list1[i]
+  file_string <- paste("../FACS_Data/PHBV_Micha1/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data)) 
+  write.csv(fcs.data.frame, paste("./csvData1/", file_string, ".csv"), row.names = FALSE)
+}
+```
+
+

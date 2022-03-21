@@ -155,6 +155,10 @@ As seen in the figures above the clusters are mostly separated by an increase in
 
 To determine which cluster specifies which group the types of scatters have to be known. According to the fcs documentation forward scatter describes the size of the particle and sideward the complexity of the particle. Knowing this it can be assumed that the black cluster are the plastics and the red cluster the microbes as the microbes have a more complex surface with structures on their cell walls while the plastics should be relatively simple and the same form, meaning that they are centered more on the left of the plot.
 
+![Density plot](density.png)
+
+![Boxplot of the scatter values.](boxplots_scattervalues.png)
+
 Creating of csv files:
 
 ```{r}
