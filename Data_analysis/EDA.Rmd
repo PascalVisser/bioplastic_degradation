@@ -1,0 +1,121 @@
+---
+title: "test"
+author: "Rob Meulenkamp"
+date: "17-2-2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library("ggpubr")
+```
+
+
+
+```{r}
+
+flow_data <- read.csv("data/dataset1.csv")
+
+flow_data2 <- read.csv("data/dataset2.csv")
+
+flow_data3 <- read.csv("data/dataset3.csv")
+
+flow_data4 <- read.csv("data/dataset4.csv")
+
+
+
+```
+
+
+
+
+```{r}
+colfunc <- colorRampPalette(c("white", "lightblue", "green", "yellow", "red"))
+ggplot(flow_data, aes(x=FSC.A, y=SSC.A)) +
+    ylim(0, 500000) +
+    xlim(0,5000000) +
+    stat_density2d(geom="tile", aes(fill = ..density..), contour = FALSE) +
+    scale_fill_gradientn(colours=colfunc(400)) + 
+    geom_density2d(colour="black", bins=5) 
+
+
+vals_f <- dplyr::filter(flow_data, FSC.A>1000000)
+
+ggplot(vals_f, aes(x=FSC.A, y=SSC.A)) +
+    ylim(0, 500000) +
+    xlim(0,5000000) +
+    stat_density2d(geom="tile", aes(fill = ..density..), contour = FALSE) +
+    scale_fill_gradientn(colours=colfunc(400)) + 
+    geom_density2d(colour="black", bins=5)
+```
+
+
+```{r}
+p1 <- ggplot(flow_data, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 01") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p2 <- ggplot(flow_data2, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 02") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+
+p3 <- ggplot(flow_data3, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 03") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+
+p4 <- ggplot(flow_data4, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 04") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+p3
+ggarrange(p1, p2, p3, p4)
+# ggsave("density.png", result)
+```
+
+```{r}
+
+A01 <- read.csv("data/A01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
+
+A02 <- read.csv("data/A02_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01..fcs.csv")
+
+A04 <- read.csv("data/A04_Uncolored_PHBV_After_freeze_thaw_Dilution10x_Sample01..fcs.csv")
+
+A05 <- read.csv("data/A05_Uncolored_PHBV_After_freeze_thaw_Dilution10x_Sample01.fcs.csv")
+
+
+C01 <- read.csv("data/C01_Colored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
+E01_map4 <- read.csv("data/E01_Uncolored_FreshPHBV_d1x_S01.fcs.csv")
+
+A01_map4 <- read.csv("data/A01_Uncolored_FreshPHBV_d100x_S01.fcs.csv")
+
+p01 <- ggplot(A01, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample A01") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+
+
+A01_fresh <- ggplot(A01_map4, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample A01 Fresh") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+E01_fresh <- ggplot(E01_map4, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample E01 Fresh") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+
+ggarrange(p01, E01_fresh)
+```
+
+
+
+
