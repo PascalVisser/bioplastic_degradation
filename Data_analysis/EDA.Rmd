@@ -90,30 +90,30 @@ A04 <- read.csv("data/A04_Uncolored_PHBV_After_freeze_thaw_Dilution10x_Sample01.
 A05 <- read.csv("data/A05_Uncolored_PHBV_After_freeze_thaw_Dilution10x_Sample01.fcs.csv")
 
 
-C01 <- read.csv("data/C01_Colored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
-E01_map4 <- read.csv("data/E01_Uncolored_FreshPHBV_d1x_S01.fcs.csv")
 
-A01_map4 <- read.csv("data/A01_Uncolored_FreshPHBV_d100x_S01.fcs.csv")
-
-p01 <- ggplot(A01, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+A01p <- ggplot(A01, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
   geom_point(shape=".", colour="red") + 
-  ggtitle("Sample A01") + 
+  ggtitle("Sample A01 before threeze thaw") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
 
 
-A01_fresh <- ggplot(A01_map4, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+A02p <- ggplot(A01, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
   geom_point(shape=".", colour="red") + 
-  ggtitle("Sample A01 Fresh") + 
+  ggtitle("Sample A02 before threeze thaw") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
-E01_fresh <- ggplot(E01_map4, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+A04p <- ggplot(A04, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
   geom_point(shape=".", colour="red") + 
-  ggtitle("Sample E01 Fresh") + 
+  ggtitle("Sample A04 after threeze thaw") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
+A05p <- ggplot(A05, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample A05 after threeze thaw") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
-ggarrange(p01, E01_fresh)
+ggarrange(A01p, A02p, A04p, A05p)
 ```
 
 
