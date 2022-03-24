@@ -113,9 +113,70 @@ A05p <- ggplot(A05, aes(x=log2(FSC.H), y=log2(SSC.H))) +
   ggtitle("Sample A05 after threeze thaw") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
-ggarrange(A01p, A02p, A04p, A05p)
+result <- ggarrange(A01p, A02p, A04p, A05p)
+
+ggsave("before_vs_after_freeze.png")
+```
+
+```{r}
+#Map3 all files from sample 01
+filenames=list.files(path ="data/map3/sample01/" ,pattern= '*.csv', full.names = TRUE)
+
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+#Map3 all files from sample 02
+filenames=list.files(path ="data/map3/sample02/" ,pattern= '*.csv', full.names = TRUE)
+
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+#Map4 all files from sample 01
+filenames=list.files(path ="data/map4/sample01/" ,pattern= '*.csv', full.names = TRUE)
+
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
 ```
 
 
+```{r}
+#Map4 all files from sample 02
+filenames=list.files(path ="data/map4/sample02/" ,pattern= '*.csv', full.names = TRUE)
+
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
 
 
