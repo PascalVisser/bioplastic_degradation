@@ -9,22 +9,389 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+library(ggplot2)
+library(dplyr)
+library("ggpubr")
 ```
 
-## Including Plots
+# Sample comparison at time = 1
 
-You can also embed plots, for example:
+Loading the data:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+files <- list.files(path = "csvData1/Sample1/")
+Time1_sample1 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData1/Sample1/", files[i], sep = "")
+  Time1_sample1 <- rbind(Time1_sample1, read.csv(csv_file))
+}
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+files <- list.files(path = "csvData1/Sample2/")
+Time1_sample2 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData1/Sample2/", files[i], sep = "")
+  Time1_sample2 <- rbind(Time1_sample2, read.csv(csv_file))
+}
+```
+
+```{r}
+files <- list.files(path = "csvData1/Sample3/")
+Time1_sample3 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData1/Sample3/", files[i], sep = "")
+  Time1_sample3 <- rbind(Time1_sample3, read.csv(csv_file))
+}
+```
+
+```{r}
+files <- list.files(path = "csvData1/Sample4/")
+Time1_sample4 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData1/Sample4/", files[i], sep = "")
+  Time1_sample4 <- rbind(Time1_sample4, read.csv(csv_file))
+}
+```
+
+
+# Sample comparison at time = 2
+
+```{r}
+files <- list.files(path = "csvData2/Sample1/")
+Time2_sample1 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData2/Sample1/", files[i], sep = "")
+  Time2_sample1 <- rbind(Time2_sample1, read.csv(csv_file))
+}
+
+files <- list.files(path = "csvData2/Sample2/")
+Time2_sample2 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData2/Sample2/", files[i], sep = "")
+  Time2_sample2 <- rbind(Time2_sample2, read.csv(csv_file))
+}
+
+files <- list.files(path = "csvData2/Sample3/")
+Time2_sample3 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData2/Sample3/", files[i], sep = "")
+  Time2_sample3 <- rbind(Time2_sample3, read.csv(csv_file))
+}
+
+files <- list.files(path = "csvData2/Sample4/")
+Time2_sample4 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData2/Sample4/", files[i], sep = "")
+  Time2_sample4 <- rbind(Time2_sample4, read.csv(csv_file))
+}
+```
+
+```{r}
+p01 <- ggplot(Time2_sample1, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time2_sample2, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time2_sample3, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time2_sample4, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+```{r}
+filenames <- list.files(path = "csvData1/Sample1/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+filenames <- list.files(path = "csvData1/Sample2/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+filenames <- list.files(path = "csvData1/Sample3/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+filenames <- list.files(path = "csvData1/Sample4/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+filenames <- list.files(path = "csvData2/Sample1/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+filenames <- list.files(path = "csvData2/Sample2/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+
+```{r}
+filenames <- list.files(path = "csvData2/Sample3/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+```{r}
+filenames <- list.files(path = "csvData2/Sample4/", pattern= '*.csv', full.names = TRUE)
+for (filename in filenames){
+bar=read.csv(filename)
+all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle(filename) + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+print(ggarrange(all_result))
+
+}
+```
+
+# Forward vs sideward at time = 1
+
+```{r}
+p01 <- ggplot(Time1_sample1, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time1_sample2, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time1_sample3, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time1_sample4, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+```{r}
+p01 <- ggplot(Time1_sample1, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time1_sample2, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time1_sample3, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time1_sample4, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+
+# Forward vs Sideward scatter at time = 2
+
+```{r}
+p01 <- ggplot(Time2_sample1, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time2_sample2, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time2_sample3, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time2_sample4, aes(x=log2(FSC.A), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+# Time = 1
+
+```{r}
+p01 <- ggplot(Time1_sample1, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time1_sample2, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time1_sample3, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time1_sample4, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+# Time = 2
+
+```{r}
+p01 <- ggplot(Time2_sample1, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time2_sample2, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time2_sample3, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time2_sample4, aes(x=log2(FSC.H), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+```{r}
+p01 <- ggplot(Time2_sample1, aes(x=log2(FSC.A), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time2_sample2, aes(x=log2(FSC.A), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time2_sample3, aes(x=log2(FSC.A), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time2_sample4, aes(x=log2(FSC.A), y=log2(Width))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+```{r}
+p01 <- ggplot(Time2_sample1, aes(x=log2(Width), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Time2_sample2, aes(x=log2(Width), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Time2_sample3, aes(x=log2(Width), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Time2_sample4, aes(x=log2(Width), y=log2(SSC.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+
