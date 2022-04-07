@@ -67,28 +67,53 @@ summary(Uncolored_Map4)
 ```
 
 ```{r}
-p01 <- ggplot(Uncolored_Map3, aes(x=log2(FL1.A), y=log2(FL1.A))) + 
+p01 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL1.A))) + 
   geom_point(shape=".", colour="red") + 
-  ggtitle("Sample 1") + 
+  ggtitle("Fluoresence variable 1") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
-p02 <- ggplot(Uncolored_Map3, aes(x=log2(FL1.A), y=log2(FL2.A))) + 
+p02 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL2.A))) + 
   geom_point(shape=".", colour="red") + 
-  ggtitle("Sample 2") + 
+  ggtitle("Fluoresence variable 2") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
-p03 <- ggplot(Uncolored_Map3, aes(x=log2(FL1.A), y=log2(FL3.A))) + 
+p03 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL3.A))) + 
   geom_point(shape=".", colour="red") + 
-  ggtitle("Sample 3") + 
+  ggtitle("Fluoresence variable 3") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
-p04 <- ggplot(Unolored_Map3, aes(x=log2(FL1.A), y=log2(FL4.A))) + 
+p04 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL4.A))) + 
   geom_point(shape=".", colour="red") + 
-  ggtitle("Sample 4") + 
+  ggtitle("Fluoresence variable 4") + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 
 ggarrange(p01, p02, p03, p04)
 ```
+
+```{r}
+p01 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL1.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL2.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL3.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL4.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
 
 ```{r}
 Uncolored_Map4
