@@ -1,0 +1,129 @@
+---
+title: "Small training set"
+author: "Rienk Heins"
+date: "3/21/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(flowCore)
+library(ggcyto)
+library(ggpubr)
+library(Biobase)
+library(ggplot2)
+```
+
+Creating the first dataset containing the fresh data at time = 0
+
+```{r}
+fresh_data <- read.csv("csvData4/A01_Uncolored_FreshPHBV_d100x_S01.fcs.csv")
+fresh_data <- rbind(fresh_data, read.csv("csvData4/A02_Uncolored_FreshPHBV_d100x_S01.fcs.csv"))
+fresh_data <- rbind(fresh_data, read.csv("csvData4/B01_Uncolored_FreshPHBV_d10x_S01.fcs.csv"))
+fresh_data <- rbind(fresh_data, read.csv("csvData4/B02_Uncolored_FreshPHBV_d10x_S01.fcs.csv"))
+fresh_data <- rbind(fresh_data, read.csv("csvData4/E01_Uncolored_FreshPHBV_d1x_S01.fcs.csv"))
+fresh_data <- rbind(fresh_data, read.csv("csvData4/E02_Uncolored_FreshPHBV_d1x_S01.fcs.csv"))
+fresh_data
+```
+
+Creating the second set at time = 2 weeks
+
+```{r}
+time01_data <- read.csv("csvData1/A01_AfterIncubation_d1000_S1,4.fcs.csv")
+#time01_data <- rbind(time01_data, read.csv("csvData1/A02_AfterIncubation_d1000_S1,4.fcs.csv"))
+time01_data
+```
+
+```{r}
+time02_data <- read.csv("csvData2/A01_Carl_d10x_S01.fcs.csv")
+#time02_data <- rbind(time02_data, read.csv("csvData2/A02_Carl_d10x_S01.fcs.csv"))
+time02_data
+```
+
+
+
+```{r}
+time03_data <- read.csv("csvData3/A01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
+time03_data <- rbind(time03_data, read.csv("csvData3/A02_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01..fcs.csv"))
+time03_data
+```
+
+
+Turning data into csv format
+
+```{r}
+file_list1 <- list.files(path="../FACS_Data/PHBV_Micha1/")
+for(i in 1:length(file_list1)){
+  file_string <- file_list1[i]
+  csvName = paste("./csvData1/", file_string, ".csv", sep = "")
+  file_string <- paste("../FACS_Data/PHBV_Micha1/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data))
+  write.csv(fcs.data.frame, csvName, row.names = FALSE)
+}
+```
+
+```{r}
+file_list2 <- list.files(path="../FACS_Data/PHBV_Micha2/")
+for(i in 1:length(file_list2)){
+  file_string <- file_list2[i]
+  csvName = paste("./csvData2/", file_string, ".csv", sep = "")
+  file_string <- paste("../FACS_Data/PHBV_Micha2/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data))
+  write.csv(fcs.data.frame, csvName, row.names = FALSE)
+}
+```
+
+```{r}
+file_list3 <- list.files(path="../FACS_Data/PHBV_Micha3/")
+for(i in 1:length(file_list3)){
+  file_string <- file_list3[i]
+  csvName = paste("./csvData3/", file_string, ".csv", sep = "")
+  file_string <- paste("../FACS_Data/PHBV_Micha3/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data))
+  write.csv(fcs.data.frame, csvName, row.names = FALSE)
+}
+```
+
+```{r}
+file_list4 <- list.files(path="../FACS_Data/PHBV_Micha4/")
+for(i in 1:length(file_list4)){
+  file_string <- file_list4[i]
+  csvName = paste("./csvData4/", file_string, ".csv", sep = "")
+  file_string <- paste("../FACS_Data/PHBV_Micha4/", file_string, sep = "")
+  fcs.data <- read.FCS(file_string)
+  fcs.data.frame <- as.data.frame(exprs(fcs.data))
+  write.csv(fcs.data.frame, csvName, row.names = FALSE)
+}
+```
+
+
+```{r}
+p01 <- ggplot(fresh_data, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample A01") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(time01_data, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample A02") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(time02_data, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample A03") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(time03_data, aes(x=log2(FSC.H), y=log2(SSC.H))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Sample A04") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
