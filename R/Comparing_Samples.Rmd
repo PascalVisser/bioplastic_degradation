@@ -112,6 +112,8 @@ p04 <- ggplot(Time2_sample4, aes(x=log2(FSC.H), y=log2(SSC.H))) +
 ggarrange(p01, p02, p03, p04)
 ```
 
+
+
 ```{r}
 filenames <- list.files(path = "csvData1/Sample1/", pattern= '*.csv', full.names = TRUE)
 for (filename in filenames){
@@ -213,7 +215,6 @@ all_result <- ggplot(bar, aes(x=log2(FSC.H), y=log2(SSC.H))) +
   ggtitle(filename) + 
   stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
 print(ggarrange(all_result))
-
 }
 ```
 
