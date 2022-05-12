@@ -1,0 +1,21 @@
+---
+title: "Create pca data"
+author: "Rienk Heins"
+date: "5/9/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data_file1 <- read.csv("..//csvData/csvData1/Sample1/A01_AfterIncubation_d1000_S1,4.fcs.csv")
+data_file1
+pca.data <- prcomp(data_file1, center = TRUE, scale. = TRUE)
+```
+
+
+
+
+
