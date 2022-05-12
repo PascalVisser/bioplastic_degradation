@@ -1,0 +1,65 @@
+---
+title: "DBscan on sample1"
+author: "Pascal Visser"
+date: "12-5-2022"
+output: html_document
+---
+
+# Loading libraries
+```{r}
+library(factoextra)
+library(dbscan)
+```
+
+
+# Proces sample
+```{r}
+# select sample to use
+sample1 <- read.csv("../csvData/Sample1_folder1.csv")
+
+# remove unnecessary columns 
+sample1 <- sample1[,-c(1,4:7,10:13,15)]
+```
+
+
+# calculate z-score
+```{r}
+# make function to calculate z-score of the columns
+z_scores <- function(x){
+  score <- (x - mean(x)) / sd(x)
+  return(score)
+}
+
+# apply z-score function to all columns
+scores <- apply(sample1, 2, z_scores)
+scores <- as.data.frame(scores)
+```
+
+
+
+
+
+# Obtaining optimal eps value
+```{r}
+# use a portion of the dataset
+scores <- scores[1:10000,]
+
+# make a KNNdistanceplot to precdict the optimal eps value
+kNNdistplot(scores, k=3)
+abline(h=1.5, lty=2, col = 'red')
+```
+
+# Dbscan 
+
+```{r}
+# make a scan object with the dbscan function:
+# - x = dataframe to preform scan on
+# - eps = size (radius) of the epsilon neighborhood
+# - minPts = number of minimum points required in the eps neighborhood for core points 
+
+scan <- dbscan(x = scores, eps = 1.5, minPts = 30, borderPoints = TRUE)
+
+# visualize the DBscan
+fviz_cluster(scan, scores, geom = "point", main = "DBscan")
+```
+
