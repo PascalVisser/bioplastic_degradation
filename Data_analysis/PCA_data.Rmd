@@ -12,10 +12,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 data_file1 <- read.csv("..//csvData/csvData1/Sample1/A01_AfterIncubation_d1000_S1,4.fcs.csv")
 data_file1
-pca.data <- prcomp(data_file1, center = TRUE, scale. = TRUE)
 ```
 
+Normalization
 
+```{r}
+z_data <- sapply(data_file1, function(x) (x - mean(x)) / sd(x))
+as.data.frame(z_data)
+```
+
+creating pca
+
+```{r}
+pca.data <- prcomp(z_data, center = TRUE, scale. = TRUE)
+pca.data
+```
+
+Creating csv file:
+```{r}
+write.csv(z_data, "z_normalized_data_sample1.1.csv", row.names = FALSE)
+```
 
 
 
