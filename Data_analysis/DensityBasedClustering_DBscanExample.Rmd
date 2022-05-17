@@ -1,0 +1,39 @@
+---
+title: "DensityBasedClustering"
+author: "Pascal Visser"
+date: "12-5-2022"
+output: html_document
+---
+
+# Density-based clustering
+
+# Installing packages
+```{r}
+library(dbscan)
+library(factoextra)
+```
+
+# Iris data
+```{r}
+data("iris")
+str(iris)
+new <- iris[,-5]
+```
+
+
+# Obtaining optimal eps value
+```{r}
+kNNdistplot(new, k=3)
+abline(h = 0.45, lty=2)
+```
+
+
+
+# Density-based clustering with dbscan and visualization
+```{r}
+d <- dbscan(x = new, eps = 0.5, minPts = 4)
+fviz_cluster(d, new, geom = "point", main = "DBscan")
+```
+
+
+
