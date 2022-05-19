@@ -1,0 +1,68 @@
+# DBscan experiment
+
+```{r}
+library(dbscan)
+```
+
+
+
+# Make dbscan function
+```{r}
+db_clustering <- function(file_in, NumOfPts = 20){
+  modified <- file_in[1:2]
+  
+
+  modified[modified == 0] <- NA
+  
+  for(i in 1:ncol(modified)){
+    modified[is.na(modified[,i]), i] <- mean(modified[,i], na.rm = TRUE)
+  }
+  
+  log_file <- log2(modified)
+  
+  scan <- hdbscan(x = log_file, minPts = NumOfPts, gen_hdbscan_tree = F, gen_simplified_tree = F)
+  plot(log_file, col = scan$cluster + 1, pch = 20)
+  return(scan)
+}
+
+points_calc <- function(x){
+  num_of_points <- length(x[,1])/100*1.5
+  return(num_of_points)}
+
+```
+
+
+# Execute
+```{r}
+sample1 <- read.csv("../csvData/csvData3/Sample1/A01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
+sample2 <- read.csv("../csvData/csvData3/Sample1/A05_Uncolored_PHBV_After_freeze_thaw_Dilution10x_Sample01.fcs.csv")
+sample3 <- read.csv("../csvData/csvData3/Sample1/E01_Uncolored_PHBV_Before_freeze_thaw_Dilution100x_Sample01.fcs.csv")
+
+db_clustering(sample1, points_calc(sample1))
+db_clustering(sample3, points_calc(sample3))
+```
+
+```{r}
+# scalen van kleine dataset
+
+samplex <- sample3[1:2]
+
+samplex[samplex == 0] <- NA
+  
+  for(i in 1:ncol(samplex)){
+    samplex[is.na(samplex[,i]), i] <- mean(samplex[,i], na.rm = TRUE)
+  }
+  
+log_file <- log2(samplex)
+log_file
+
+
+FSC.A <- runif(2500, min=mean(log_file[,1])-5, max = mean(log_file[,1])+5)
+SSC.A <- runif(2500, min=mean(log_file[,2])-5, max = mean(log_file[,2])+5)
+
+frame <- cbind(FSC.A, SSC.A)
+c <- rbind(log_file, frame)
+db_clustering(c, 50)
+```
+
+
