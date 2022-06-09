@@ -14,6 +14,9 @@ library(factoextra)
 library(dbscan)
 library(ggplot2)
 library(cluster)
+library("fpc")
+library("plyr")                                                 
+library("readr")
 ```
 
 
@@ -76,6 +79,29 @@ mean(sample1[sample1$`db1$cluster` == 2, 'FSC.H'])
 mean(sample1[sample1$`db1$cluster` == 2, 'Width'])
 ```
 
+# Map 3 and 4
+
+```{r}
+map3 <- list.files(path = "data/map3/sample01/",    
+                       pattern = "*.csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>%                                           
+  bind_rows
+
+map4 <- list.files(path = "data/map4/sample01/",    
+                       pattern = "*csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>%                                           
+  bind_rows 
+
+
+map1 <- read.csv("data/Sample1_folder1.csv")
+# map1 <- as.data.frame(map1)
+map3 <- as.data.frame(map3)
+map4 <- as.data.frame(map4)
+
+
+```
+
+
 # Create functions for statistics
 
 ```{r}
@@ -125,6 +151,55 @@ perc_shift(mean(sample1$FSC.A), mean(sample2$FSC.A))
 perc_shift(mean(sample1$FSC.H), mean(sample2$FSC.H))
 perc_shift(mean(sample1$SSC.A), mean(sample2$SSC.A))
 perc_shift(mean(sample1$SSC.H), mean(sample2$SSC.H))
+```
+
+```{r}
+files <- list.files(path = "../csvData/csvData4/Sample1/")
+Time0 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("../csvData/csvData4/Sample1/", files[i], sep = "")
+  Time0 <- rbind(Time0, read.csv(csv_file))
+}
+
+files <- list.files(path = "../csvData/csvData1/Sample1/")
+Time1 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("../csvData/csvData1/Sample1/", files[i], sep = "")
+  Time1 <- rbind(Time1, read.csv(csv_file))
+}
+
+files <- list.files(path = "../csvData/csvData2/Sample1/")
+Time2 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("../csvData/csvData2/Sample1/", files[i], sep = "")
+  Time2 <- rbind(Time2, read.csv(csv_file))
+}
+
+files <- list.files(path = "../csvData/csvData3/Sample1/")
+Time3 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("../csvData/csvData3/Sample1/", files[i], sep = "")
+  Time3 <- rbind(Time3, read.csv(csv_file))
+}
+```
+
+# Testing statistics on full datasets
+
+clustering:
+```{r}
+db0 <- db_clustering(Time0, points_calc(Time0))
+db1 <- db_clustering(Time1, points_calc(Time1))
+db2 <- db_clustering(Time2, points_calc(Time2))
+db3 <- db_clustering(Time3, points_calc(Time3))
+```
+
+
+## Silhouette scores
+```{r}
+silhouette_scores(Time0)
+silhouette_scores(Time1)
+silhouette_scores(Time2)
+silhouette_scores(Time3)
 ```
 
 
