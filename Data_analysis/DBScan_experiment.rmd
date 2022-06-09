@@ -1,34 +1,84 @@
-# DBscan experiment
+---
+title: "library"
+author: "Pascal Visser"
+date: '2022-06-07'
+output: html_document
+---
+
+
+# Load packages
+
+install the packages if not installed, otherwise load them 
 
 ```{r}
-library(dbscan)
-library(ggplot2)
+if(!require(devtools)){
+    install.packages("devtools")
+    library(devtools)
+}
+
+if(!require(dbscan)){
+    install_github("mhahsler/dbscan")
+    library(dbscan)
+}
+
+if(!require(dplyr)){
+  install.packages("dplyr")
+  library(dplyr)
+}
+
+library(sys)
+
 ```
 
 
 
-# Make dbscan function
+
+# Dbscan function
 ```{r}
 db_clustering <- function(file_in, NumOfPts = 20){
-  modified <- file_in[1:2]
+  
+  
+  # Random samples data if file to big  
+    if (between(nrow(file_in), 10000, 20000)){
+    file_in <- sample_n(file_in, 15000)
+    memory.limit(size = 4000)
+  } else if (nrow(file_in) > 20000){
+    file_in <- sample_n(file_in, 25000)
+    memory.limit(size = 4000)
+  }
+  
+  # strip all columns except fsc and ssc
+  modified <- file_in[,c(1,2)]
   
 
+  # if there are NA's, replaces them with the mean
   modified[modified == 0] <- NA
   
   for(i in 1:ncol(modified)){
     modified[is.na(modified[,i]), i] <- mean(modified[,i], na.rm = TRUE)
   }
   
+  # log transform file
   log_file <- log2(modified)
   
-  scan <- hdbscan(x = log_file, minPts = NumOfPts, gen_hdbscan_tree = T, gen_simplified_tree = F)
+  # Apply Hdbscan on log transformed data
+  scan <- hdbscan(log_file, NumOfPts)
+  
+  # plots the data and return scan statistics
   plot(log_file, col = scan$cluster +1, pch = 20)
   return(scan)
 }
 
 points_calc <- function(x){
+  
+  # calculate number of points with 1.5%
   num_of_points <- length(x[,1])/100*1.5
-  return(num_of_points)}
+  
+  # if data is small, apply smaller number of points
+  if (length(row(x[1])) > 1000){
+    return(num_of_points)
+  } else {
+   return(15)}}
 
 ```
 
@@ -36,56 +86,19 @@ points_calc <- function(x){
 # Execute
 ```{r}
 sample1 <- read.csv("../csvData/csvData3/Sample1/A01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
-sample2 <- read.csv("../csvData/csvData3/Sample1/A05_Uncolored_PHBV_After_freeze_thaw_Dilution10x_Sample01.fcs.csv")
-sample3 <- read.csv("../csvData/Sample1_folder1.csv")
 
+start_time <- Sys.time()
 db_clustering(sample1, points_calc(sample1))
-db_clustering(sample3, points_calc(sample3))
+end_time <- Sys.time()
+
+cat("\nRunning time = ", round(end_time - start_time, 2), "Seconds")
 ```
 
+Running time sample 1 map 1
 
-
-```{r}
-A01.1 <- read.csv("../csvData/csvData1/Sample1/A01_AfterIncubation_d1000_S1,4.fcs.csv")
-A02.1 <- read.csv("../csvData/csvData1/Sample1/A02_AfterIncubation_d1000_S1,4.fcs.csv")
-A03.1 <- read.csv("../csvData/csvData1/Sample1/A03_AfterIncubation_d1000_S1,4.fcs.csv")
-A04.1 <- read.csv("../csvData/csvData1/Sample1/A04_AfterIncubation_d1000_S1,4.fcs.csv")
-A05.1 <- read.csv("../csvData/csvData1/Sample1/A05_AfterIncubation_d1000_S1,4.fcs.csv")
-A06.1 <- read.csv("../csvData/csvData1/Sample1/A06_AfterIncubation_d1000_S1,4.fcs.csv")
-A07.1 <- read.csv("../csvData/csvData1/Sample1/A07_AfterIncubation_d1000_S1,4.fcs.csv")
-A08.1 <- read.csv("../csvData/csvData1/Sample1/A08_AfterIncubation_d1000_S1,4.fcs.csv")
-A09.1 <- read.csv("../csvData/csvData1/Sample1/A09_AfterIncubation_d1000_S1,4.fcs.csv")
-A10.1 <- read.csv("../csvData/csvData1/Sample1/A10_AfterIncubation_d1000_S1,4.fcs.csv")
-
-E01.1 <- read.csv("../csvData/csvData1/Sample1/E01_AfterIncubation_d100_S1,3.fcs.csv")
-E02.1 <- read.csv("../csvData/csvData1/Sample1/E02_AfterIncubation_d100_S1,3.fcs.csv")
-E03.1 <- read.csv("../csvData/csvData1/Sample1/E03_AfterIncubation_d100_S1,3.fcs.csv")
-E04.1 <- read.csv("../csvData/csvData1/Sample1/E04_AfterIncubation_d100_S1,3.fcs.csv")
-E05.1 <- read.csv("../csvData/csvData1/Sample1/E06_AfterIncubationRediluded__d100_S1,3.fcs.csv")
-
-
-A01.2 <- read.csv("../csvData/csvData2/Sample1/A01_Carl_d10x_S01.fcs.csv")
-A02.2 <- read.csv("../csvData/csvData2/Sample1/A02_Carl_d10x_S01.fcs.csv")
-A03.2 <- read.csv("../csvData/csvData2/Sample1/A03_Carl_d10x_S01.fcs.csv")
-A04.2 <- read.csv("../csvData/csvData2/Sample1/A04_Carl_d10x_S01.fcs.csv")
-
-E01.2 <- read.csv("../csvData/csvData2/Sample1/E01_FreezeThaw_d1000x_S01.fcs.csv")
-E03.2 <- read.csv("../csvData/csvData2/Sample1/E03_FreezeThaw_d100x_S01.fcs.csv")
-E05.2 <- read.csv("../csvData/csvData2/Sample1/E05_FreezeThaw_d10x_S01.fcs.csv")
-E09.2 <- read.csv("../csvData/csvData2/Sample1/E09_FreezeThaw_d10x_S01.fcs.csv")
-E10.2 <- read.csv("../csvData/csvData2/Sample1/E10_FreezeThaw_d10x_S01.fcs.csv")
-E12.2 <- read.csv("../csvData/csvData2/Sample1/E12_FreezeThaw_d10x_S01.fcs.csv")
-
-
-well_A_map1 <- rbind(A01.1, A02.1, A03.1, A04.1, A05.1, A06.1, A07.1, A08.1, A09.1, A10.1)
-Well_E_map1 <- rbind(E01.1, E02.1, E03.1, E04.1, E05.1)
-well_A_map2 <- rbind(A01.2, A02.2, A03.2, A04.2)
-Well_E_map2 <- rbind(E01.2, E03.2, E05.2, E09.2, E10.2, E12.2)
-
-
-q <- db_clustering(Well_E_map2, 15)
-q$cluster_scores
-```
-
+10.000 = 7.874149 Seconds
+20.000 = 17.71293 Seconds
+25.000 = 31.21267 Seconds
+30.000 = 59.7622 Seconds
 
 
