@@ -1,0 +1,85 @@
+---
+title: "Create pca data"
+author: "Rienk Heins"
+date: "5/9/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dbscan)
+```
+
+```{r}
+data_file1 <- read.csv("~/bioplastic_degradation/csvData/csvData3/Sample1/A01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
+data_file2 <- read.csv("~/bioplastic_degradation/csvData/csvData1/Sample1/A01_AfterIncubation_d1000_S1,4.fcs.csv")
+data_file3 <- read.csv("~/bioplastic_degradation/csvData/csvData2/Sample1/A01_Carl_d10x_S01.fcs.csv")
+data_file1 <- data_file1[,c(1:13)]
+data_file2 <- data_file2[,c(1:13)]
+data_file3 <- data_file3[,c(1:13)]
+data_full <- read.csv("~/bioplastic_degradation/csvData/Sample1_folder1.csv")
+data_full <- data_full[,c(1:13)]
+```
+
+Normalization
+
+```{r}
+z_data1 <- as.data.frame(sapply(data_file1, function(x) (x - mean(x)) / sd(x)))
+z_data2 <- as.data.frame(sapply(data_file2, function(x) (x - mean(x)) / sd(x)))
+z_data3 <- as.data.frame(sapply(data_file3, function(x) (x - mean(x)) / sd(x)))
+z_data_full <- as.data.frame(sapply(data_full, function(x) (x - mean(x)) / sd(x)))
+```
+
+```{r}
+log_norm1 <- as.data.frame(sapply(data_file1, function(x) log2(x)))
+log_norm2 <- as.data.frame(sapply(data_file2, function(x) log2(x)))
+log_norm3 <- as.data.frame(sapply(data_file3, function(x) log2(x)))
+log_norm_full <- as.data.frame(sapply(data_full, function(x) log2(x)))
+```
+
+OPTICS in R:
+
+```{r}
+res <- optics(log_norm, eps = 2, minPts = 10)
+res
+```
+
+```{r}
+plot(res)
+```
+
+```{r}
+res <- extractDBSCAN(res, eps_cl = .9)
+res
+```
+
+```{r}
+x <- cbind(log_norm$FSC.H, log_norm$SSC.H)
+```
+
+
+```{r}
+res <- extractDBSCAN(res, eps_cl = .9)
+res
+plot(res)
+hullplot(x, res)
+```
+
+
+```{r}
+write.csv(log_norm1, "log2_norm_data_sample1.3.csv", row.names = FALSE)
+write.csv(log_norm2, "log2_norm_data_sample1.1.csv", row.names = FALSE)
+write.csv(log_norm3, "log2_norm_data_sample1.2.csv", row.names = FALSE)
+write.csv(log_norm_full, "log2_norm_data_sample1.full.csv", row.names = FALSE)
+```
+
+Creating csv file:
+```{r}
+write.csv(z_data1, "z_normalized_data_sample1.3.csv", row.names = FALSE)
+write.csv(z_data2, "z_normalized_data_sample1.1.csv", row.names = FALSE)
+write.csv(z_data3, "z_normalized_data_sample1.2.csv", row.names = FALSE)
+write.csv(z_data_full, "z_normalized_data_sample1.full.csv", row.names = FALSE)
+```
+
+
+
