@@ -35,24 +35,49 @@ map4 <- read.csv("data/map4/sample01/")
 # Make dbscan function
 ```{r}
 db_clustering <- function(file_in, NumOfPts = 20){
-  modified <- file_in[1:2]
   
+  
+  # Random samples data if file to big  
+    if (between(nrow(file_in), 10000, 20000)){
+    file_in <- sample_n(file_in, 15000)
+    memory.limit(size = 4000)
+  } else if (nrow(file_in) > 20000){
+    file_in <- sample_n(file_in, 25000)
+    memory.limit(size = 4000)
+  }
+  
+  # strip all columns except fsc and ssc
+  modified <- file_in[,c(1,2)]
+  
+
+  # if there are NA's, replaces them with the mean
   modified[modified == 0] <- NA
   
   for(i in 1:ncol(modified)){
     modified[is.na(modified[,i]), i] <- mean(modified[,i], na.rm = TRUE)
   }
   
+  # log transform file
   log_file <- log2(modified)
   
-  scan <- hdbscan(x = log_file, minPts = NumOfPts, gen_hdbscan_tree = T, gen_simplified_tree = F)
+  # Apply Hdbscan on log transformed data
+  scan <- hdbscan(log_file, NumOfPts)
+  
+  # plots the data and return scan statistics
   plot(log_file, col = scan$cluster +1, pch = 20)
   return(scan)
 }
 
 points_calc <- function(x){
+  
+  # calculate number of points with 1.5%
   num_of_points <- length(x[,1])/100*1.5
-  return(num_of_points)}
+  
+  # if data is small, apply smaller number of points
+  if (length(row(x[1])) > 1000){
+    return(num_of_points)
+  } else {
+   return(15)}}
 ```
 
 
