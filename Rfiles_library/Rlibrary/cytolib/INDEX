@@ -1,0 +1,5 @@
+cytolib_LdFlags         Output the LD flags for building against
+                        cytolib. These flags are propagated to
+                        sourceCpp via the inlineCxxPlugin (defined
+                        below) and to packages via a line in
+                        Makevars[.win] like this:
