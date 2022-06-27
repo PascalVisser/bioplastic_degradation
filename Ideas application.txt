@@ -1,0 +1,7 @@
+Probability statistics: silhoutte score etc.
+
+Advanced settings:
+	- Choose variables
+	- Trimming
+
+Plot with all cluster centers and vectors.

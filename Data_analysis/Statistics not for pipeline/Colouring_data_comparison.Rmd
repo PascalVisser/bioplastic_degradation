@@ -1,0 +1,134 @@
+---
+title: "Effects of coloring"
+author: "Rienk Heins"
+date: "3/28/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library("ggpubr")
+```
+
+# Loading data
+
+Loading in the uncoloured and coloured data from map 3 
+
+```{r}
+files <- list.files(path = "csvData3/", pattern = "Uncolored")
+Uncolored_Map3 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData3/", files[i], sep = "")
+  Uncolored_Map3 <- rbind(Uncolored_Map3, read.csv(csv_file))
+}
+```
+
+
+```{r}
+files <- list.files(path = "csvData3/", pattern = "Colored")
+Colored_Map3 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData3/", files[i], sep = "")
+  Colored_Map3 <- rbind(Colored_Map3, read.csv(csv_file))
+}
+```
+
+Loading in the data from map 4
+
+```{r}
+files <- list.files(path = "csvData4/", pattern = "Uncolored")
+Uncolored_Map4 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData4/", files[i], sep = "")
+  Uncolored_Map4 <- rbind(Uncolored_Map4, read.csv(csv_file))
+}
+```
+
+```{r}
+files <- list.files(path = "csvData4/", pattern = "Colored")
+Colored_Map4 <- data.frame()
+for(i in 1:length(files)){
+  csv_file <- paste("csvData4/", files[i], sep = "")
+  Colored_Map4 <- rbind(Colored_Map4, read.csv(csv_file))
+}
+```
+
+```{r}
+summary(Uncolored_Map3)
+summary(Colored_Map3)
+summary(Colored_Map4)
+summary(Uncolored_Map4)
+```
+
+```{r}
+p01 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL1.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL2.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL3.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Uncolored_Map3, aes(x=log2(Width), y=log2(FL4.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+```{r}
+p01 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL1.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 1") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p02 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL2.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 2") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p03 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL3.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 3") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+p04 <- ggplot(Colored_Map3, aes(x=log2(Width), y=log2(FL4.A))) + 
+  geom_point(shape=".", colour="red") + 
+  ggtitle("Fluoresence variable 4") + 
+  stat_density2d(aes(alpha=..density..), geom="raster", contour = FALSE)
+
+ggarrange(p01, p02, p03, p04)
+```
+
+
+```{r}
+Uncolored_Map4
+```
+
+```{r}
+boxplot(log2(Uncolored_Map3[,c(3:6, 9:12)]))
+boxplot(log2(Colored_Map3[,c(3:6, 9:12)]))
+```
+
+```{r}
+boxplot(log2(Uncolored_Map4[,c(3:6, 9:12)]))
+boxplot(log2(Colored_Map4[,c(3:6, 9:12)]))
+```
+
+
+
+

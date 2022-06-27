@@ -1,0 +1,207 @@
+---
+title: "HDBscan"
+author: "Rob Meulenkamp"
+date: '2022-05-19'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#imports
+library(scales)
+library(dbscan)
+library("fpc")
+library("plyr")                                                 
+library("dplyr")                                                
+library("readr")  
+library(ggplot2)
+```
+
+
+
+```{r}
+map3 <- read.csv("data/Sample1_folder2.csv")
+
+map4 <- read.csv("data/map4/sample01/")
+
+```
+
+
+# DBscan experiment
+
+
+
+# Make dbscan function
+```{r}
+db_clustering <- function(file_in, NumOfPts = 20){
+  
+  
+  # Random samples data if file to big  
+    if (between(nrow(file_in), 10000, 20000)){
+    file_in <- sample_n(file_in, 15000)
+    memory.limit(size = 4000)
+  } else if (nrow(file_in) > 20000){
+    file_in <- sample_n(file_in, 25000)
+    memory.limit(size = 4000)
+  }
+  
+  # strip all columns except fsc and ssc
+  modified <- file_in[,c(1,2)]
+  
+
+  # if there are NA's, replaces them with the mean
+  modified[modified == 0] <- NA
+  
+  for(i in 1:ncol(modified)){
+    modified[is.na(modified[,i]), i] <- mean(modified[,i], na.rm = TRUE)
+  }
+  
+  # log transform file
+  log_file <- log2(modified)
+  
+  # Apply Hdbscan on log transformed data
+  scan <- hdbscan(log_file, NumOfPts)
+  
+  # plots the data and return scan statistics
+  plot(log_file, col = scan$cluster +1, pch = 20)
+  return(scan)
+}
+
+points_calc <- function(x){
+  
+  # calculate number of points with 1.5%
+  num_of_points <- length(x[,1])/100*1.5
+  
+  # if data is small, apply smaller number of points
+  if (length(row(x[1])) > 1000){
+    return(num_of_points)
+  } else {
+   return(15)}}
+```
+
+
+
+# DB result
+
+```{r}
+#Tree_t <- db_clustering(map2, points_calc(map2))
+
+Tree_f <- db_clustering(map2, points_calc(map2))
+```
+
+
+
+
+# Mutate samples into one big file
+
+
+```{r}
+
+map1 <- list.files(path = "data/map1/sample01/",    
+                       pattern = "*.csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>%                                           
+  bind_rows 
+
+
+  
+map3 <- list.files(path = "data/map3/sample01/",    
+                       pattern = "*.csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>%                                           
+  bind_rows
+
+map4 <- list.files(path = "data/map4/sample01/",    
+                       pattern = "*csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>%                                           
+  bind_rows 
+
+
+map1 <- read.csv("data/Sample1_folder1.csv")
+# map1 <- as.data.frame(map1)
+map3 <- as.data.frame(map3)
+map4 <- as.data.frame(map4)
+
+
+```
+
+
+# Calculate the log en coordinates for HDBscan 
+
+```{r}
+calc_log <- function(file_in){
+  modified <- file_in[1:2]
+  
+modified[modified == 0] <- NA
+
+for(i in 1:ncol(modified)){
+  modified[is.na(modified[,i]), i] <- mean(modified[,i], na.rm = TRUE)
+}
+
+log_file <- log2(modified)
+  
+  return(log_file)
+  
+}
+
+
+calc_coords <- function(frame, cluster){
+  sum_cluster_1_FSC <- sum(frame[frame$cluster == cluster, c(1)])
+  sum_cluster_1_SSC <- sum(frame[frame$cluster == cluster, c(2)])
+  
+  total_cluster1_FSC <- length(frame[frame$cluster == cluster, c(1)])
+  total_cluster1_SSC <- length(frame[frame$cluster == cluster, c(2)])
+
+  map3_center_1 <- data.frame(x = sum_cluster_1_FSC / total_cluster1_FSC,
+                       y = sum_cluster_1_SSC / total_cluster1_SSC)
+  return(map3_center_1)
+  
+  
+}
+
+log_map3 <- calc_log(map3)
+
+scan_map3 <- db_clustering(map3, points_calc(map3))
+
+log_map3["cluster"] <- scan_map3$cluster
+
+map3_frame <- log_map3[log_map3$cluster != 0, c(1:3)]
+
+map3_center_1 <- calc_coords(map3_frame, 1)
+map3_center_2 <- calc_coords(map3_frame, 2)
+
+db_clustering(map3, points_calc(map3))
+points(map3_center_1, col="orange", lwd= 2)
+points(map3_center_2, col="blue", lwd= 2)
+```
+
+```{r}
+
+log_map4 <- calc_log(map4)
+
+scan_map4 <- db_clustering(map4, points_calc(map4))
+
+log_map4["cluster"] <- scan_map4$cluster
+
+map4_frame <- log_map4[log_map4$cluster != 0, c(1:3)]
+
+map4_center_1 <- calc_coords(map4_frame, 1)
+map4_center_2 <- calc_coords(map4_frame, 2)
+
+
+db_clustering(map4, points_calc(map4))
+points(map4_center_1, col="orange", lwd= 2)
+points(map4_center_2, col="blue", lwd= 2)
+
+```
+
+
+```{r}
+
+center_2$x - map3_center_2$x
+plot(map3_center_2, col='red')
+points(center_2, col='blue')
+```
+
+
+
+

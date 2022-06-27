@@ -1,0 +1,16 @@
+"""
+Main script to execute
+"""
+
+
+
+rule all:
+      input:
+          "images/Hdbscan_output.png"
+          
+
+
+include: "rules/Hdbscan.smk"
+          
+        
+  

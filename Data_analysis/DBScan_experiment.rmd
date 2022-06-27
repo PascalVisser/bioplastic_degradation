@@ -1,33 +1,84 @@
-# DBscan experiment
+---
+title: "library"
+author: "Pascal Visser"
+date: '2022-06-07'
+output: html_document
+---
+
+
+# Load packages
+
+install the packages if not installed, otherwise load them 
 
 ```{r}
-library(dbscan)
+if(!require(devtools)){
+    install.packages("devtools")
+    library(devtools)
+}
+
+if(!require(dbscan)){
+    install_github("mhahsler/dbscan")
+    library(dbscan)
+}
+
+if(!require(dplyr)){
+  install.packages("dplyr")
+  library(dplyr)
+}
+
+library(sys)
+
 ```
 
 
 
-# Make dbscan function
+
+# Dbscan function
 ```{r}
 db_clustering <- function(file_in, NumOfPts = 20){
-  modified <- file_in[1:2]
+  
+  
+  # Random samples data if file to big  
+    if (between(nrow(file_in), 10000, 20000)){
+    file_in <- sample_n(file_in, 15000)
+    memory.limit(size = 4000)
+  } else if (nrow(file_in) > 20000){
+    file_in <- sample_n(file_in, 25000)
+    memory.limit(size = 4000)
+  }
+  
+  # strip all columns except fsc and ssc
+  modified <- file_in[,c(1,2)]
   
 
+  # if there are NA's, replaces them with the mean
   modified[modified == 0] <- NA
   
   for(i in 1:ncol(modified)){
     modified[is.na(modified[,i]), i] <- mean(modified[,i], na.rm = TRUE)
   }
   
+  # log transform file
   log_file <- log2(modified)
   
-  scan <- hdbscan(x = log_file, minPts = NumOfPts, gen_hdbscan_tree = F, gen_simplified_tree = F)
-  plot(log_file, col = scan$cluster + 1, pch = 20)
+  # Apply Hdbscan on log transformed data
+  scan <- hdbscan(log_file, NumOfPts)
+  
+  # plots the data and return scan statistics
+  plot(log_file, col = scan$cluster +1, pch = 20)
   return(scan)
 }
 
 points_calc <- function(x){
+  
+  # calculate number of points with 1.5%
   num_of_points <- length(x[,1])/100*1.5
-  return(num_of_points)}
+  
+  # if data is small, apply smaller number of points
+  if (length(row(x[1])) > 1000){
+    return(num_of_points)
+  } else {
+   return(15)}}
 
 ```
 
@@ -35,34 +86,19 @@ points_calc <- function(x){
 # Execute
 ```{r}
 sample1 <- read.csv("../csvData/csvData3/Sample1/A01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
-sample2 <- read.csv("../csvData/csvData3/Sample1/A05_Uncolored_PHBV_After_freeze_thaw_Dilution10x_Sample01.fcs.csv")
-sample3 <- read.csv("../csvData/csvData3/Sample1/E01_Uncolored_PHBV_Before_freeze_thaw_Dilution100x_Sample01.fcs.csv")
 
+start_time <- Sys.time()
 db_clustering(sample1, points_calc(sample1))
-db_clustering(sample3, points_calc(sample3))
+end_time <- Sys.time()
+
+cat("\nRunning time = ", round(end_time - start_time, 2), "Seconds")
 ```
 
-```{r}
-# scalen van kleine dataset
+Running time sample 1 map 1
 
-samplex <- sample3[1:2]
-
-samplex[samplex == 0] <- NA
-  
-  for(i in 1:ncol(samplex)){
-    samplex[is.na(samplex[,i]), i] <- mean(samplex[,i], na.rm = TRUE)
-  }
-  
-log_file <- log2(samplex)
-log_file
-
-
-FSC.A <- runif(2500, min=mean(log_file[,1])-5, max = mean(log_file[,1])+5)
-SSC.A <- runif(2500, min=mean(log_file[,2])-5, max = mean(log_file[,2])+5)
-
-frame <- cbind(FSC.A, SSC.A)
-c <- rbind(log_file, frame)
-db_clustering(c, 50)
-```
+10.000 = 7.874149 Seconds
+20.000 = 17.71293 Seconds
+25.000 = 31.21267 Seconds
+30.000 = 59.7622 Seconds
 
 
