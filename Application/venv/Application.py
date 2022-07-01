@@ -30,7 +30,7 @@ def selectFiles():
 #fileButton = tk.Button(root, text="Open files", padx=10, pady=5, fg="white", command=selectFiles())
 #fileButton.pack(side="bottom")
 workdir = filedialog.askdirectory(initialdir="/")
-config_file = f"*config file {workdir}"
+config_file = f" #configfile config.yaml \n\n{workdir}"
 # run the pipeline
 os.system("snakefile command")
 
