@@ -79,8 +79,13 @@ First unlock current work directory with:
 
 Starting pipeline:
 `snakemake -s workflow/Snakefile -c 8`
--s <- specifying snakefile
--c <- number of cores
+
+specifying snakefile:
+`-s` 
+
+number of cores:
+`-c {number}`  
+
 ------------------------------------------------------------------------
 
 ## Example output HDBscanner algorithm
