@@ -11,23 +11,9 @@ output: html_document
 install the packages if not installed, otherwise load them 
 
 ```{r}
-if(!require(devtools)){
-    install.packages("devtools")
-    library(devtools)
-}
-
-if(!require(dbscan)){
-    install_github("mhahsler/dbscan")
-    library(dbscan)
-}
-
-if(!require(dplyr)){
-  install.packages("dplyr")
-  library(dplyr)
-}
-
+library(dbscan)
 library(sys)
-
+library(dplyr)
 ```
 
 
@@ -37,14 +23,15 @@ library(sys)
 ```{r}
 db_clustering <- function(file_in, NumOfPts = 20){
   
+  gc()
   
   # Random samples data if file to big  
     if (between(nrow(file_in), 10000, 20000)){
-    file_in <- sample_n(file_in, 15000)
-    memory.limit(size = 4000)
+    file_in <- sample_n(file_in, 15000, replace = T)
+    memory.limit(size = 16000)
   } else if (nrow(file_in) > 20000){
-    file_in <- sample_n(file_in, 25000)
-    memory.limit(size = 4000)
+    file_in <- sample_n(file_in, 28000)
+    memory.limit(size = 16000)
   }
   
   # strip all columns except fsc and ssc
@@ -75,20 +62,38 @@ points_calc <- function(x){
   num_of_points <- length(x[,1])/100*1.5
   
   # if data is small, apply smaller number of points
-  if (length(row(x[1])) > 1000){
-    return(num_of_points)
-  } else {
-   return(15)}}
+  if (length(row(x[1])) > 20000){
+    num_of_points <- 25000/100*0.55}
+  else if (length(row(x[1])) < 1000){
+    num_of_points <- 15}
+  else {
+  }
+  
+  return(num_of_points)
+}
 
 ```
 
 
+```{r}
+# assign
+
+map1 <- read.csv("../all_map/map1.csv")
+map2 <- read.csv("../all_map/map2.csv")
+map3 <- read.csv("../all_map/map3.csv")
+map4 <- read.csv("../all_map/map4.csv")
+```
+
 # Execute
 ```{r}
-sample1 <- read.csv("../csvData/csvData3/Sample1/A01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample01.fcs.csv")
-
+gc()
 start_time <- Sys.time()
-db_clustering(sample1, points_calc(sample1))
+
+db_clustering(map1, points_calc(map1))
+db_clustering(map2, points_calc(map2))
+db_clustering(map3, points_calc(map3))
+db_clustering(map4, points_calc(map4))
+
 end_time <- Sys.time()
 
 cat("\nRunning time = ", round(end_time - start_time, 2), "Seconds")
