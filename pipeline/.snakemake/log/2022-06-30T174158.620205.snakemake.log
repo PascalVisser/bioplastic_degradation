@@ -1,0 +1,36 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+DBscanner             1              1              1
+all                   1              1              1
+convert_to_csv        1              1              1
+total                 3              1              1
+
+Select jobs to execute...
+
+[Thu Jun 30 17:41:58 2022]
+Job 4: Starting with executing HDBscan algorithm 
+
+
+[Thu Jun 30 17:41:58 2022]
+Job 2: Started with converting FCS file to CSV file
+
+[Thu Jun 30 17:41:59 2022]
+Error in rule convert_to_csv:
+    jobid: 2
+    output: checks/convert.done
+    shell:
+        Rscript workflow/R/fsc_converter.R data/map1 data/map2 data/map3 data/map4
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Touching output file checks/HDBscanner.done.
+[Thu Jun 30 17:43:47 2022]
+Finished job 4.
+1 of 3 steps (33%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-06-30T174158.620205.snakemake.log

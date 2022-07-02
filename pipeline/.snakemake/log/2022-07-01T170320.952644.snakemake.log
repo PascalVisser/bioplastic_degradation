@@ -1,0 +1,4 @@
+IndentationError in line 12 of <tokenize>:
+unindent does not match any outer indentation level (<tokenize>, line 12)
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 14, in <module>
+  File "/usr/lib/python3.9/tokenize.py", line 512, in _tokenize

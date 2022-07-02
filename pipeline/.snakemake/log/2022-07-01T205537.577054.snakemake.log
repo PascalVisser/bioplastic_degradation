@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 6 of /homes/lrmeulenkamp/thema12/workflow/rules/hdbscan.smk:
+Missing input files for rule HDBscanner:
+data/map3/csv/map3.csv

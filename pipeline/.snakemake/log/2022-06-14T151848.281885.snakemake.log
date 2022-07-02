@@ -1,0 +1,17 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 12
+Job counts:
+	count	jobs
+	1	all
+	1	visual
+	2
+
+[Tue Jun 14 15:18:48 2022]
+Job 1: Started with executing HDBscanner...
+
+Error submitting jobscript (exit code 127):
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-06-14T151848.281885.snakemake.log

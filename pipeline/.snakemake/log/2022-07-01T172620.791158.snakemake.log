@@ -1,0 +1,47 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job                  count    min threads    max threads
+-----------------  -------  -------------  -------------
+all                      1              1              1
+convert_to_csv           1              1              1
+download_packages        1              1              1
+total                    3              1              1
+
+Select jobs to execute...
+
+[Fri Jul  1 17:26:21 2022]
+Job 2: Started with converting FCS file to CSV file
+
+
+[Fri Jul  1 17:26:21 2022]
+Job 1: Starting with downloading packages
+
+Touching output file checks/download.done.
+[Fri Jul  1 17:26:23 2022]
+Finished job 1.
+1 of 3 steps (33%) done
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 18 of /homes/lrmeulenkamp/thema12/workflow/rules/convert.smk:
+Job Missing files after 5 seconds:
+data/map1/csv/map2.csv
+data/map1/csv/map3.csv
+data/map1/csv/map4.csv
+data/map2/csv/map1.csv
+data/map2/csv/map3.csv
+data/map2/csv/map4.csv
+data/map3/csv/map1.csv
+data/map3/csv/map2.csv
+data/map3/csv/map4.csv
+data/map4/csv/map1.csv
+data/map4/csv/map2.csv
+data/map4/csv/map3.csv
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Job id: 2 completed successfully, but some output files are missing. 2
+Removing output files of failed job convert_to_csv since they might be corrupted:
+data/map1/csv/map1.csv, data/map2/csv/map2.csv, data/map3/csv/map3.csv, data/map4/csv/map4.csv
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-07-01T172620.791158.snakemake.log

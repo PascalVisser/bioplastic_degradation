@@ -1,0 +1,5 @@
+ #configfile config.yaml
+
+paths: ['data/map1', 'data/map2', 'data/map3', 'data/map4']
+
+files_to_compare : ['data/map1', 'data/map2']

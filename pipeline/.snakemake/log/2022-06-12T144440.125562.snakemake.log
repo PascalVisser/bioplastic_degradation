@@ -1,0 +1,31 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count    min threads    max threads
+------  -------  -------------  -------------
+all           1              1              1
+visual        1             12             12
+total         2              1             12
+
+Select jobs to execute...
+
+[Sun Jun 12 14:44:40 2022]
+Job 1: Started with executing HDBscanner...
+
+[Sun Jun 12 14:44:41 2022]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Sun Jun 12 14:44:41 2022]
+localrule all:
+    input: images/out.png
+    jobid: 0
+    resources: tmpdir=/tmp
+
+[Sun Jun 12 14:44:41 2022]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-06-12T144440.125562.snakemake.log

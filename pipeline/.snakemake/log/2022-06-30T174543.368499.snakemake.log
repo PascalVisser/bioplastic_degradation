@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in line 7 of /homes/lrmeulenkamp/thema12/workflow/Snakefile:
+Missing input files for rule all:
+images/map1.csv
+images/map3.csv
+images/map4.csv
+images/map2.csv

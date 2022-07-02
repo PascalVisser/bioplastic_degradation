@@ -1,0 +1,27 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count    min threads    max threads
+------  -------  -------------  -------------
+all           1              1              1
+merger        1              1              1
+total         2              1              1
+
+Select jobs to execute...
+
+[Wed Jun 29 14:40:03 2022]
+Job 1: Starting with executing HDBscan algorithm 
+
+[Wed Jun 29 14:40:04 2022]
+Error in rule merger:
+    jobid: 1
+    output: checks/HDBscanner.done
+    shell:
+        Rscript workflow/R/Hdbscan.R data/map1 data/map2 data/map3 data/map4
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-06-29T144003.193970.snakemake.log

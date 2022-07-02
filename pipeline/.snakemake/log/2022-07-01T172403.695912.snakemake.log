@@ -1,0 +1,3 @@
+WildcardError in line 10 of /homes/lrmeulenkamp/thema12/workflow/Snakefile:
+No values given for wildcard 'map'.
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 10, in <module>

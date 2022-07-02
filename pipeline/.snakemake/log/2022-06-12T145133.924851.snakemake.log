@@ -1,0 +1,4 @@
+Building DAG of jobs...
+WildcardError in line 11 of /homes/lrmeulenkamp/thema12/workflow/Snakefile:
+Wildcards in input files cannot be determined from output files:
+'sample'

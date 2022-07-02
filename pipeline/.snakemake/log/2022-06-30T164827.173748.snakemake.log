@@ -1,0 +1,4 @@
+NameError in line 7 of /homes/lrmeulenkamp/thema12/workflow/rules/hdbscan.smk:
+name 'paths' is not defined
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 16, in <module>
+  File "/homes/lrmeulenkamp/thema12/workflow/rules/hdbscan.smk", line 7, in <module>

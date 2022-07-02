@@ -1,0 +1,4 @@
+LdFlags                 Output the LD flags for linking against pb.  It
+                        is only needed to be called for windows. For
+                        nix-OS, the other package simply import this
+                        for the side effect of loading RProtoBuflib.

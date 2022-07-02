@@ -1,0 +1,45 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job                  count    min threads    max threads
+-----------------  -------  -------------  -------------
+all                      1              1              1
+convert_to_csv           1              1              1
+download_packages        1              1              1
+merger                   1              1              1
+total                    4              1              1
+
+Select jobs to execute...
+
+[Fri Jul  1 09:58:57 2022]
+Job 3: Starting with merging CSV files
+
+
+[Fri Jul  1 09:58:57 2022]
+Job 1: Starting with downloading packages
+
+
+[Fri Jul  1 09:58:57 2022]
+Job 2: Started with converting FCS file to CSV file
+
+[Fri Jul  1 09:58:58 2022]
+Error in rule merger:
+    jobid: 3
+    output: checks/merge.done
+    shell:
+        Rscript workflow/R/merge.R data/map1 data/map2 data/map3 data/map4
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Touching output file checks/download.done.
+[Fri Jul  1 09:58:59 2022]
+Finished job 1.
+1 of 4 steps (25%) done
+Touching output file checks/convert.done.
+[Fri Jul  1 09:59:05 2022]
+Finished job 2.
+2 of 4 steps (50%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-07-01T095857.595215.snakemake.log

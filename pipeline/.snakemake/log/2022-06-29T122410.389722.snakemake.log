@@ -1,0 +1,15 @@
+Building DAG of jobs...
+MissingInputException in line 10 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+Missing input files for rule merger:
+data/map3/map2.csv
+data/map3/map1.csv
+data/map1/map4.csv
+data/map1/map2.csv
+data/map4/map2.csv
+data/map4/map1.csv
+data/map2/map1.csv
+data/map1/map3.csv
+data/map2/map3.csv
+data/map4/map3.csv
+data/map2/map4.csv
+data/map3/map4.csv

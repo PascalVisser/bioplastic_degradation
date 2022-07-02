@@ -1,0 +1,60 @@
+Package: flowCore
+Title: flowCore: Basic structures for flow cytometry data
+Version: 2.0.1
+Authors@R: personList(person("B","Ellis", role = "aut"),
+							 person("Perry", "Haaland", role = "aut"),
+							 person("Florian", "Hahne", role = "aut"),
+							 person("Nathan", "Le Meur", role = "aut"),
+							 person("Nishant", "Gopalakrishnan", role = "aut"),
+							 person("Josef", "Spidlen", role = "aut"),
+							 person("Mike", "Jiang", role = c("aut","cre"), email = "wjiang2@fhcrc.org"),
+							 person("Greg", "Finak", role = "aut"),
+							 person("Samuel","Granjeaud", role = "ctb"))
+Maintainer: Mike Jiang <wjiang2@fhcrc.org>, Jake Wagner <jpwagner@fhcrc.org>
+Description: Provides S4 data structures and basic functions to deal with flow
+    cytometry data.
+Depends: R (>= 3.5.0)
+Imports: Biobase, BiocGenerics (>= 0.29.2), grDevices, graphics,
+        methods, stats, utils, stats4, Rcpp, matrixStats, cytolib (>=
+        1.9.15)
+Suggests: Rgraphviz, flowViz, flowStats (>= 3.43.4), testthat,
+        flowWorkspace, flowWorkspaceData, openCyto, knitr, ggcyto,
+        gridExtra
+Collate: AllGenerics.R AllClasses.R flowFrame-accessors.R
+        flowSet-accessors.R transform_gate-methods.R coerce.R
+        logicalFilterResult-accessors.R summarizeFilter-methods.R
+        filterSummary-accessors.R manyFilterResult-accessors.R
+        summary-methods.R multipleFilterResult-accessors.R on-methods.R
+        transformList-accessors.R identifier-methods.R
+        parameters-methods.R initialize-methods.R
+        filterResult-accessors.R in-methods.R rectangleGate-accessors.R
+        filterResultList-accessors.R IO.R show-methods.R
+        length-methods.R names-methods.R split-methods.R eval-methods.R
+        gatingML.R FCSTransTransform.R median-logicle-transform.R
+        utils.R RcppExports.R flowCore.R GvHD.R CytoExploreR_wrappers.R
+License: Artistic-2.0
+biocViews: ImmunoOncology, Infrastructure, FlowCytometry,
+        CellBasedAssays
+LinkingTo: Rcpp, RcppArmadillo, BH(>= 1.65.0.1), cytolib(>= 1.7.2),
+        RProtoBufLib
+VignetteBuilder: knitr
+SystemRequirements: GNU make, C++11
+RoxygenNote: 7.1.0
+Encoding: UTF-8
+git_url: https://git.bioconductor.org/packages/flowCore
+git_branch: RELEASE_3_11
+git_last_commit: 4de9154
+git_last_commit_date: 2020-06-08
+Date/Publication: 2020-06-09
+NeedsCompilation: yes
+Packaged: 2020-06-09 23:40:59 UTC; biocbuild
+Author: B Ellis [aut],
+  Perry Haaland [aut],
+  Florian Hahne [aut],
+  Nathan Le Meur [aut],
+  Nishant Gopalakrishnan [aut],
+  Josef Spidlen [aut],
+  Mike Jiang [aut, cre],
+  Greg Finak [aut],
+  Samuel Granjeaud [ctb]
+Built: R 4.0.4; x86_64-pc-linux-gnu; 2022-06-27 09:08:21 UTC; unix

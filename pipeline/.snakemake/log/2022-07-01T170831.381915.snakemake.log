@@ -1,0 +1,4 @@
+SyntaxError:
+Input and output files have to be specified as strings or lists of strings.
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 14, in <module>
+  File "/homes/lrmeulenkamp/thema12/workflow/rules/hdbscan.smk", line 20, in <module>

@@ -1,0 +1,32 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count    min threads    max threads
+---------  -------  -------------  -------------
+DBscanner        1              1              1
+all              1              1              1
+total            2              1              1
+
+Select jobs to execute...
+
+[Fri Jul  1 13:55:14 2022]
+Job 3: Starting with executing HDBscan algorithm 
+
+Touching output file checks/HDBscanner.done.
+[Fri Jul  1 13:56:24 2022]
+Finished job 3.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Fri Jul  1 13:56:24 2022]
+localrule all:
+    input: checks/download.done, checks/convert.done, checks/HDBscanner.done
+    jobid: 0
+    resources: tmpdir=/tmp
+
+[Fri Jul  1 13:56:24 2022]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-07-01T135513.979342.snakemake.log

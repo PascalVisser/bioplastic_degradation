@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 10 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+Missing input files for rule scanner:
+paths

@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 7 of /homes/lrmeulenkamp/thema12/workflow/Snakefile:
+Missing input files for rule all:
+checks/convert.done

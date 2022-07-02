@@ -1,0 +1,41 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job                  count    min threads    max threads
+-----------------  -------  -------------  -------------
+all                      1              1              1
+convert_to_csv           1              1              1
+download_packages        1              1              1
+total                    3              1              1
+
+Select jobs to execute...
+
+[Mon Jun 27 14:32:30 2022]
+Job 1: Starting with downloading packages
+
+
+[Mon Jun 27 14:32:30 2022]
+Job 2: Started with converting FCS file to CSV file
+
+Touching output file convert.done.
+[Mon Jun 27 14:32:31 2022]
+Finished job 2.
+1 of 3 steps (33%) done
+Touching output file download.done.
+[Mon Jun 27 14:32:32 2022]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+
+[Mon Jun 27 14:32:32 2022]
+localrule all:
+    input: download.done, convert.done
+    jobid: 0
+    resources: tmpdir=/tmp
+
+[Mon Jun 27 14:32:32 2022]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-06-27T143229.888946.snakemake.log

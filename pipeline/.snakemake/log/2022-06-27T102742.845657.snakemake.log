@@ -1,0 +1,3 @@
+WildcardError in line 6 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+No values given for wildcard 'file_name'.
+  File "/homes/lrmeulenkamp/thema12/workflow/snakefile", line 6, in <module>

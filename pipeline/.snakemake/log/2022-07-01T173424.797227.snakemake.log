@@ -1,0 +1,4 @@
+WildcardError in line 23 of /homes/lrmeulenkamp/thema12/workflow/rules/convert.smk:
+No values given for wildcard 'map'.
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 13, in <module>
+  File "/homes/lrmeulenkamp/thema12/workflow/rules/convert.smk", line 23, in <module>

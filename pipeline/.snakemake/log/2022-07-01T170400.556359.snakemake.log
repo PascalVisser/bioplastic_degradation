@@ -1,0 +1,3 @@
+SyntaxError in line 15 of /homes/lrmeulenkamp/thema12/workflow/rules/hdbscan.smk:
+invalid syntax
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 14, in <module>

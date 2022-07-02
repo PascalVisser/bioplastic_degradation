@@ -1,0 +1,3 @@
+WildcardError in line 12 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+No values given for wildcard 'sample'.
+  File "/homes/lrmeulenkamp/thema12/workflow/snakefile", line 12, in <module>

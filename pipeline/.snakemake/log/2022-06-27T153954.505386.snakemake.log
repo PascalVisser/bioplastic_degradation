@@ -1,0 +1,4 @@
+TypeError in line 5 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+expected string or bytes-like object
+  File "/homes/lrmeulenkamp/thema12/workflow/snakefile", line 5, in <module>
+  File "/usr/lib/python3.9/re.py", line 241, in findall

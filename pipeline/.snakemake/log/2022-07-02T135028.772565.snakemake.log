@@ -1,0 +1,46 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job                  count    min threads    max threads
+-----------------  -------  -------------  -------------
+HDBscanner               1              1              1
+all                      1              1              1
+convert_to_csv           1              1              1
+download_packages        1              1              1
+statistics               1              1              1
+total                    5              1              1
+
+Select jobs to execute...
+
+[Sat Jul  2 13:50:29 2022]
+Job 4: Starting with calculating statistics
+
+
+[Sat Jul  2 13:50:29 2022]
+Job 1: Starting with downloading packages
+
+
+[Sat Jul  2 13:50:29 2022]
+Job 2: Started with converting FCS file to CSV file
+
+[Sat Jul  2 13:50:29 2022]
+Error in rule statistics:
+    jobid: 4
+    output: checks/stat.done
+    shell:
+        Rscript workflow/R/statistics.R data/map1 data/map2 | rm Rplots.pdf
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Touching output file checks/download.done.
+[Sat Jul  2 13:50:31 2022]
+Finished job 1.
+1 of 5 steps (20%) done
+Touching output file checks/convert.done.
+[Sat Jul  2 13:51:11 2022]
+Finished job 2.
+2 of 5 steps (40%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-07-02T135028.772565.snakemake.log

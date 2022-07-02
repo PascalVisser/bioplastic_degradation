@@ -1,0 +1,4 @@
+NameError in line 11 of /homes/lrmeulenkamp/thema12/workflow/rules/hdbscan.smk:
+name 'sample' is not defined
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 14, in <module>
+  File "/homes/lrmeulenkamp/thema12/workflow/rules/hdbscan.smk", line 11, in <module>

@@ -1,0 +1,10 @@
+Building DAG of jobs...
+MissingInputException in line 13 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+Missing input files for rule scanner:
+A06_AfterIncubation_d1000_S1,4
+B10_AfterIncubation_d1000_S2,4
+A02_Carl_d10x_S01
+A02_Uncolored_FreshPHBV_d100x_S01
+B01_Uncolored_PHBV_Before_freeze_thaw_Dilution10x_Sample02
+A09_AfterIncubation_d1000_S1,4
+B01_AfterIncubation_d1000_S2,4

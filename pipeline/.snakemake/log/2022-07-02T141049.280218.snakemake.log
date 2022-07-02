@@ -1,0 +1,16 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job           count    min threads    max threads
+----------  -------  -------------  -------------
+all               1              1              1
+statistics        1              1              1
+total             2              1              1
+
+Select jobs to execute...
+
+[Sat Jul  2 14:10:49 2022]
+Job 4: Starting with calculating statistics
+

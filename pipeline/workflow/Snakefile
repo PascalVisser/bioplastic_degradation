@@ -2,15 +2,18 @@
 Main script to execute
 """
 
-
+configfile: "config/config.yaml"
 
 rule all:
       input:
-          "images/Hdbscan_output.png"
-          
+        "checks/download.done",
+        "checks/convert.done",
+        "checks/scan.done",
+        "checks/stat.done"
 
-
-include: "rules/Hdbscan.smk"
           
+include: "rules/convert.smk"
+include: "rules/hdbscan.smk"
+include: "rules/statistics.smk"
         
   

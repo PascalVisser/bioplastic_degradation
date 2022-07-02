@@ -1,0 +1,29 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 12
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count    min threads    max threads
+------  -------  -------------  -------------
+all           1              1              1
+visual        1             12             12
+total         2              1             12
+
+Select jobs to execute...
+
+[Tue Jun 14 15:50:50 2022]
+Job 1: Started with executing HDBscanner...
+
+[Tue Jun 14 15:50:51 2022]
+Error in rule visual:
+    jobid: 1
+    output: scan.done
+
+RuleException:
+CalledProcessError in line 22 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+Command 'set -euo pipefail;  Rscript --vanilla /homes/lrmeulenkamp/thema12/.snakemake/scripts/tmpd2s1clip.Hdbscan.R' returned non-zero exit status 1.
+  File "/homes/lrmeulenkamp/thema12/workflow/snakefile", line 22, in __rule_visual
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /homes/lrmeulenkamp/thema12/.snakemake/log/2022-06-14T155050.044820.snakemake.log

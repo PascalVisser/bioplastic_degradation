@@ -1,0 +1,4 @@
+WorkflowError in line 17 of /homes/lrmeulenkamp/thema12/workflow/Snakefile:
+Failed to open source file /homes/lrmeulenkamp/thema12/workflow/rules/stastics.smk
+FileNotFoundError: [Errno 2] No such file or directory: '/homes/lrmeulenkamp/thema12/workflow/rules/stastics.smk'
+  File "/homes/lrmeulenkamp/thema12/workflow/Snakefile", line 17, in <module>

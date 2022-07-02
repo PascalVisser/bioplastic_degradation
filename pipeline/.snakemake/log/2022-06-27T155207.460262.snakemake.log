@@ -1,0 +1,3 @@
+AttributeError in line 5 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+'Wildcards' object has no attribute 'condition'
+  File "/homes/lrmeulenkamp/thema12/workflow/snakefile", line 5, in <module>

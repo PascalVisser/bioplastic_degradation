@@ -1,0 +1,3 @@
+ValueError in line 5 of /homes/lrmeulenkamp/thema12/workflow/snakefile:
+not enough values to unpack (expected 2, got 1)
+  File "/homes/lrmeulenkamp/thema12/workflow/snakefile", line 5, in <module>
